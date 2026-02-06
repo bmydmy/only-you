@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  
+</body>
+
+</html><!DOCTYPE html>
+<html lang="am">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      background: #ffe6eb;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin-top: 40px;
+      color: #d6336c;
+    }
+
+    .buttons {
+      margin-top: 40px;
+      position: relative;
+      height: 200px;
+      width: 100%;
+    }
+
+    button {
+      font-size: 22px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    #yesBtn {
+      background: #ff4d6d;
+      color: white;
+      left: 55%;
+      top: 80px;
+      transform: translateX(-50%);
+      transition: transform 0.3s;
+    }
+
+    #noBtn {
+      background: #adb5bd;
+      color: black;
+      left: 35%;
+      top: 80px;
+      transform: translateX(-50%);
+    }
+
+    #result {
+      display: none;
+      margin-top: 30px;
+    }
+
+    #result img {
+      width: 260px;
+      border-radius: 25px;
+      margin-top: 15px;
+    }
+
+    .heart, .confetti {
+      position: fixed;
+      pointer-events: none;
+    }
+
+    .heart {
+      font-size: 22px;
+      animation: float 4s linear forwards;
+    }
+
+    .confetti {
+      width: 8px;
+      height: 8px;
+      background-color: red;
+      opacity: 0.8;
+      border-radius: 50%;
+      animation: confettiFall 4s linear forwards;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-600px); opacity: 0; }
+    }
+
+    @keyframes confettiFall {
+      from { transform: translateY(0) rotate(0deg); opacity: 1; }
+      to { transform: translateY(600px) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>
+    የኔ ውብ የኔ ልዩ ❤️<br>
+    ታፈቅሪኛለሽ?
+  </h1>
+
+  <div class="buttons">
+    <button id="noBtn">አይ</button>
+    <button id="yesBtn">አዎ</button>
+  </div>
+
+  <div id="result">
+    <h2 id="loveText"></h2>
+    <img src="couple.jpg" alt="our photo">
+  </div>
+
+  <audio id="sound" src="yes.mp3"></audio>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const result = document.getElementById("result");
+    const sound = document.getElementById("sound");
+    const loveText = document.getElementById("loveText");
+
+    let heartsStarted = false;
+
+    // አይ እንዲሸሽ
+    noBtn.addEventListener("mouseover", () => {
+      const maxX = window.innerWidth - noBtn.offsetWidth;
+      const maxY = 200;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
+
+    // አዎ ከተነካ
+    yesBtn.addEventListener("click", () => {
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+
+      // መልእክት + ፎቶ
+      loveText.innerHTML = "በህይወቴ ያለሽው ምርጥ ስጦታ አንቺ ነሽ 😘<br>ዘላለሜን አፈቅርሻለሁ መቼምም አይቀየርም ❤️";
+      result.style.display = "block";
+
+      // ሙዚቃ
+      sound.play().catch(() => {});
+
+      // ልብ animation
+      if (!heartsStarted) {
+        heartsStarted = true;
+
+        // ❤️ hearts
+        setInterval(() => {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.innerHTML = "❤️";
+          heart.style.left = Math.random() * window.innerWidth + "px";
+          heart.style.bottom = "0px";
+          heart.style.fontSize = (15 + Math.random() * 25) + "px";
+          heart.style.opacity = Math.random();
+          document.body.appendChild(heart);
+          heart.animate([
+            { transform: 'translateY(0)', opacity: heart.style.opacity },
+            { transform: 'translateY(-600px)', opacity: 0 }
+          ], { duration: 3000 + Math.random() * 2000, easing: 'linear' });
+          setTimeout(() => heart.remove(), 5000);
+        }, 300);
+
+        // 🎉 confetti
+        setInterval(() => {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti";
+          confetti.style.left = Math.random() * window.innerWidth + "px";
+          confetti.style.backgroundColor = `hsl(${Math.random()*360}, 70%, 60%)`;
+          document.body.appendChild(confetti);
+          confetti.animate([
+            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+            { transform: 'translateY(600px) rotate(360deg)', opacity: 0 }
+          ], { duration: 4000 + Math.random() * 2000, easing: 'linear' });
+          setTimeout(() => confetti.remove(), 5000);
+        }, 100);
+      }
+    });
+  </script>
+
+</body>
+</html>
